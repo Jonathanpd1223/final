@@ -58,3 +58,24 @@ app.put('/todos/:id', async (req, res) => {
 });
 
 
+
+app.delete('/todos/:id', async (req, res) => {
+  try {
+    const { id } = req.params; // Get the todo ID from the URL
+
+    const deleteTodo = await pool.query(
+      "DELETE FROM todos WHERE todo_id = $1 RETURNING *",
+      [id]
+    );
+
+    if (deleteTodo.rows.length === 0) {
+      return res.status(404).json("Todo not found");
+    }
+
+    res.json("Todo was deleted");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
