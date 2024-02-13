@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import AddTodo from './components/AddTodo';
+import TodosList from './components/TodosList';
+import UpdateTodo from './components/UpdateTodo';
 
-function App() {
+const App = () => {
+  const [editTodo, setEditTodo] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Todo List</h1>
+      <AddTodo getTodos={getTodos} />
+      {editTodo ? (
+        <UpdateTodo todo={editTodo} getTodos={getTodos} setEditing={setEditTodo} />
+      ) : (
+        <TodosList setEditTodo={setEditTodo} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
