@@ -13,6 +13,16 @@ const TodosList = ({ setEditTodo }) => {
     getTodos();
   }, []);
 
+
+  const deleteTodo = async (id) => {
+  try {
+    await axios.delete(`http://localhost:5000/todos/${id}`);
+    setTodos(todos.filter(todo => todo.todo_id !== id));
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
   return (
     <ul>
       {todos.map((todo) => (
